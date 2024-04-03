@@ -2,10 +2,13 @@
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { EyeIcon } from "@heroicons/react/24/outline";
+import { EyeSlashIcon } from "@heroicons/react/16/solid";
 
 const LoginPage = () => {
   const [username, setUsername] = useState<string>("");
   const [pass, setPass] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -64,14 +67,24 @@ const LoginPage = () => {
                   </label>
                   <input
                     className="text-md placeholder:text-md focus:border-primary mb-6 w-full rounded-lg border-[1px] border-transparent px-4 pb-3 pt-8 text-black shadow-md !outline-none duration-300 hover:border-[#b3b3b3] disabled:bg-[#f2f2f2]"
-                    type="password"
                     value={pass}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setPass(e.target.value)
                     }
                     required
+                    type={showPassword ? "text" : "password"}
                     placeholder="Şifrəni daxil et"
                   />
+                  <span
+                    className="absolute right-[3%] top-1/3 translate-y-[-50%] cursor-pointer text-gray-700"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? (
+                      <EyeIcon className="h-8 w-8 text-black" />
+                    ) : (
+                      <EyeSlashIcon className="h-8 w-8 text-black" />
+                    )}
+                  </span>
                 </div>
 
                 <button
